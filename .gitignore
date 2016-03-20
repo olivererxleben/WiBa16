@@ -18,3 +18,7 @@ slprj/
 
 # Session info
 octave-workspace
+
+#### OS X Trash Files ####
+*.DS_STORE
+*.Thumbs.db
