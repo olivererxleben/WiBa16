@@ -1,4 +1,7 @@
 % Task 2.2
+% Clustering
+% authors:  Oliver Erxleben
+%           Jens Overmöller
 
 % read raw data
 S = dlmread('wbsa0350.dat');
