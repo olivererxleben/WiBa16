@@ -8,7 +8,7 @@ S = dlmread('wbsa0350.dat');
 A = pdist(S); % calc distances
 
 %disp(squareform(A)); % check matrix of A, optional
-% Baue Clusterbaum aus Abstandsvektor auf
+
 B = linkage(A); % build clustertree
 
 dendrogram(B); % plot cluster tree
@@ -61,7 +61,10 @@ fprintf('K-mean-clustering: num Elementes in clusters: %i, %i, %i,%i\n',noelKM1,
 
 centrS = zscore(S); % centralize data
 
-[Z,U,J] = fcm(centrS,nocl); % do clustering: U := Zuordnungsmatrix
+% Z:= Centers, U := Zuordnungsmatrix, J := function Values
+[Z,U,J] = fcm(centrS,nocl); % do clustering
+
+%
 UBiggerThanThird = U(:,(sum(U>0.33) >= 2));
 
 % values from data
