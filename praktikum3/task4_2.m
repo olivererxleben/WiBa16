@@ -10,49 +10,36 @@ S = dlmread('wbsa0230c.dat');
 
 plot3(S(:,1), S(:,2), S(:,3)); % X, Y, Z
 disp(S);
-% Aufgabenstellung: Zweidimensionale polynomiale Regression zweiter Ordnung
-% Finde Ausgleichs-Paraboloiden 
-% der Form: p(x,y) = a1*x^2 + a2*x*y + a3*y^2 + a4*x + a5*y + a6;
 
-% Spalte abhängige Variable ab (werte)
+% save dependecy vector (values vector)
+% Note: Script var is t
 t = S(:,3);
 
 x = S(:,1);
 y = S(:,2);
 
+v_ones = ones(length(S),1); % ones matrix
+
 % build data matrix without variances (Skript S 62f., 5.37)
-%R = [ x1.^2 x1.*x2 x2.^2 x1 x2 ones(size(S,1),1) ];  
+% bulding values for: 
+% p(x,y) = a1*x^2 + a2*x*y + a3*y^2 + a4*x + a5*y + a6;
+R = [ x.^2, x .* y, y.^2, x, y, v_ones ];
 
-
-%Nummerierung von 0 bis n-1; => n-Datensätze
-dim = 0:1.0:size(S,1)-1;
-nums = horzcat(dim');
-
-oners = ones(length(S),1);
-x_sq = x.^2;
-xy = x .* y;
-y_sq = y.^2;
-
-R = [ x.^2, xy, y.^2, x, y, oners];
-
-%R1 = [ S(:,1:2), oners];
-%disp(R1);
-%R2 = [ S(:,2), S(:,1), oners];
-%disp(R2);
-
+% build regressions and print p func
 a = (R' * R)^(-1) * (R' * t);
-disp(a);
+fprintf('p(t) = %4.2f*x^2 + %4.2f*x*y + %4.2f*y^2 + %4.2f*x + %4.2f*y + %4.2f\n', a(1,1),a(2,1),a(3,1),a(4,1),a(5,1),a(6,1));
 
-%a2 = (R2' * R2)^(-1) * (R2' * t);
-%disp(a2);
+% prepare plotting
+[X,Y] = meshgrid(-17:0.1:19,-17:0.1:19); 
+Z = a1*X.^2 + a2*(X.*Y) + a3*Y.^2 + a4*X + a5*Y + a6; 
 
-%tm = mean(t);
-%r2 = norm(tm-R*a)^2 / norm(tm-t)^2;
-%disp(tm);
-fprintf('p = %d %d*t %d*t^2 %d*t^3 %d*t^4 $d*t^5', a(1), a(2), a(3), a(4), a(5), a(6));
-
-p = a(1) + (a(2)*t) + (a(3)*t.^2) + (a(4)*t.^3) + (a(5)*t.^4) + (a(6)*t.^5);
-figure(2)
-plot(p);
-plot3(S(:,1), S(:,2), p);
-
+% do plotting
+% mesh: equation paraboloid (the actual Fläche :D)
+% markers: values of the actual paraboloid plotted in figure 1
+fig = figure(2);
+set(fig, 'Position', [0,0, 1024, 768]);
+mesh(X,Y,Z); % p = Z-axis
+hold on;
+grid on;
+plot3(S(:,1), S(:,2), S(:,3),'LineStyle','none','Marker','x','Color','red');
+hold off;
