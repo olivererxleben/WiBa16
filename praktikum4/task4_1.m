@@ -24,9 +24,56 @@ hContFig = subplot(1,2,1);
 contour(X,Y,Z,30);
 
 
+
 %% a) random start value and stepRange min(1, 1/delta(f(x0))
-startVal = rand(1);
 
-%stepRange = min(1, 1/gradientXY);
+startVal = 0; % TODO randomize 
+disp(startVal);
+vecX = [startVal startVal];
 
-%% 
+[z, gdx0, gdy0] = vals(startVal, startVal);
+disp([gdx0 gdy0]);
+
+vecGd = [gdx0 gdy0];
+stepRange = [min(1, 1/gdx0) min(1, 1/gdy0)];
+%%  loop
+i = 1;
+
+while i < 100
+
+  % b) 
+ 
+  xi_1 = [ vecX(i, 1) - (stepRange(1,1) * vecGd(i,1)) vecX(i, 2) - (stepRange(1,2) * vecGd(i,2))]; % xi + 1
+  
+  vecX = [vecX; xi_1];
+ 
+  % c)
+  fxi = vals(vecX(i,1), vecX(i,2));
+  fxi_1 = vals(vecX(i+1,1), vecX(i+1,2));
+  
+  % e)
+  one = (pdist(fxi(1)) - pdist(fxi_1(1)));
+  disp(one);
+  disp('----');
+  if ( (pdist(fxi(1)) - pdist(fxi_1(1))) > -0.01) && ((pdist(fxi(1)) - pdist(fxi_1(1))) < 0.01)
+    disp(vecX);
+    disp(fxi_1);
+    disp(i);
+  end
+    
+  
+  
+  if fxi_1(1) < fxi(1)
+    stepRange = stepRange * 1.01;
+      
+    % iterate 
+    i = i + 1;
+    
+    
+  else
+    % d)
+    vecX(end) = [];
+    stepRange = stepRange / 2;
+  end
+    
+end
