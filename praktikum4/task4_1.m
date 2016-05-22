@@ -24,8 +24,8 @@ hContFig = subplot(1,2,1);
 contour(X,Y,Z,30);
 
 
-
-%% a) random start value and stepRange min(1, 1/delta(f(x0))
+%% algorithm start 
+%random start value and stepRange min(1, 1/delta(f(x0))
 
 startVal = 0; % TODO randomize 
 disp(startVal);
@@ -35,7 +35,7 @@ vecX = [startVal startVal];
 disp([gdx0 gdy0]);
 
 vecGd = [gdx0 gdy0];
-stepRange = [min(1, 1/gdx0) min(1, 1/gdy0)];
+stepRange = [min(1, 1/gdx0) min(1, 1/gdy0)]; % initial stepRange
 %%  loop
 i = 1;
 
@@ -62,13 +62,11 @@ while i < 100
   end
     
   
-  
   if fxi_1(1) < fxi(1)
     stepRange = stepRange * 1.01;
       
     % iterate 
     i = i + 1;
-    
     
   else
     % d)
