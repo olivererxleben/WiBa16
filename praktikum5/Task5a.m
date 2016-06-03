@@ -1,4 +1,4 @@
-%% Matrix + Eingang
+%% a) Matrix + Eingang
 % eingang
 e = [ 0, 0, 0;
       1, 0, 1;
@@ -11,7 +11,7 @@ W1 = [  3.0085, 3.0044, 3.0050, -4.3934
       ];
 W2 = [-2.8077, 4.2396, 0.6678];
 
-%% training
+%% a) training
 F_last = Inf(); 
 
 fprintf('Trainiere Netz...\n');
@@ -42,8 +42,10 @@ for j = 1:10
     F_last = F;
 end
 
-%% auswertung
+%% a) auswertung
 for i = 1:size(e,1)
     d = werteaus(W1, W2, e(i,:));
     fprintf('Eingabedaten: %i %i - Sollausgabe: %i - Istausgabe: %f\n',e(i,1),e(i,2),e(i,3),d);
 end
+
+
