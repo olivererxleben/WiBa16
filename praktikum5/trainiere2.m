@@ -77,6 +77,7 @@ for m = 1:n
         if(sigma > 0.001)
             sigma = sigma * 0.5;
         end
+
     else
     % Wir naehern uns weiter einem Minimum an
     % --> Erhoehe Sigma und benutze neue Gewichtsmatrizen
