@@ -19,11 +19,13 @@ figure('Name','Fehlerrate in Abhaenigigkeit der Iterationsschritte jedes Lernvor
 
 for j = 1:10
     F = 0;
+    
     % Trainiere Netz
     [W1trained,W2trained,n,F_all] = trainiere(W1,W2,e,e(:,3),1000,0.001,0.00001,0.75);
     % Teste jetzt das trainierte Netz
     for i = 1:size(e,1)
         d = werteaus(W1trained, W2trained, e(i,:));
+        disp(d);
         F = F + (d - e(i,3)).^2;
     end % for
     fprintf('Gesamtfehler im %i ten Durchlauf: %f\n',j,F);
