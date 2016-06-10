@@ -1,4 +1,4 @@
-function [W1,W2,W3,m,F_all] = trainiere2(W1,W2,W3,E,A,n,F_soll,minCrit,startsigma)
+function [W1,W2,W3,m,F_all] = trainiere3(W1,W2,W3,E,A,n,F_soll,minCrit,startsigma)
 % Trainiert ein neuronales Netz 
 %     mit den Gewichtsmatrizen W1,W2, den
 %     Menge der Lerndatensaetze e_menge und Sollausgabewerten a_menge solange, 
@@ -42,20 +42,19 @@ for m = 1:n
         
         % Wende jetzt Backpropagation-Verfahren an
         % Berechne dritten Fehlergradienten (vgl. 6.106, 6.111)
-        delta3 = 2 * diag(1-tansig(e3).^2) * (d - a');
+        delta3 = 2 * diag(1-sigmoid(e3).^2) * (d - a');
         grad3 = delta3 * d2';
         grad3gesamt = grad3gesamt + grad3;
         % Berechne zweiten Fehlergradienten
-        delta2 =  diag(1-tansig(e2).^2) * W3(:,1:end-1)' * delta3;
+        delta2 =  diag(1-sigmoid(e2).^2) * W3(:,1:end-1)' * delta3;
         grad2 = delta2 * d1';
         grad2gesamt = grad2gesamt + grad2;
         % Berechne ersten Fehlergradienten (vgl. 6.108, 6.110)
-        delta1 = diag(1-tansig(e1).^2) * W2(:,1:end-1)' * delta2;
+        delta1 = diag(1-sigmoid(e1).^2) * W2(:,1:end-1)' * delta2;
         grad1 = delta1 * d0';
         grad1gesamt = grad1gesamt + grad1;
     end 
    
-    
     % Alle Ist-Ausgabewerte in d_gesamt vorhanden.Fehlerfunktion auswerten.
     if(F_ist <= F_soll)
     % Zielwert erreicht

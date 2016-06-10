@@ -34,12 +34,12 @@ W1 = rand(3,3);
 W2 = rand(3,4);
 W3 = rand(4,4);
 
-[W1trained,W2trained,W3trained,n,sse] = trainiere2(W1,W2,W3,E',A',1000,0.001,0.0001,0.075);
+[W1trained,W2trained,W3trained,n,sse] = trainiere3(W1,W2,W3,E',A',1000,0.001,0.0001,0.075);
 
 %% Auswertung
 while(1)
    [x,y] = ginput(1);
-   d = werteaus2(W1trained,W2trained,W3trained,[x y]);
+   d = werteaus3(W1trained,W2trained,W3trained,[x y]);
    disp(d);
    
    % round 

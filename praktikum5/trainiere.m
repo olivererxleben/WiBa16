@@ -6,6 +6,7 @@ sigma = startsigma;
 grad1gesamt = 0;
 grad2gesamt = 0;
 
+% num Anzahl Trainingsdurchläufe 
 for m = 1:n
     F_ist = 0;
     
